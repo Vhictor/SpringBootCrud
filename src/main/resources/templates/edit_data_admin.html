@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Register a new course</title>
+</head>
+<body>
+<div align="center">
+    <h1>Please fill the form below to register a new course</h1>
+    <br />
+    <form action="#" th:action="@{/savescore}" th:object="${studentData}"
+          method="post">
+       <input type="hidden" th:field="*{id}" />
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" th:field="*{name}" readonly="readonly"  /></td>
+            </tr>
+            <tr>
+                <td>Matric No:</td>
+                <td><input type="text" th:field="*{matric}" readonly="readonly"  /></td>
+            </tr>
+            <tr>
+                <td>Level:</td>
+                <td><input type="text" th:field="*{level}" readonly="readonly"  /></td>
+            </tr>
+            <tr>
+                <td>Course Code:</td>
+                <td><input type="text" th:field="*{coursec}" readonly="readonly"  /></td>
+            </tr>
+            <tr>
+                <td>Course Title:</td>
+                <td><input type="text" th:field="*{courset}" readonly="readonly" /></td>
+            </tr>
+            <tr>
+                <td>Student Score:</td>
+                <td><input type="text" th:field="*{score}" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Save</button> </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

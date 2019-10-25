@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Lecturer Log in Form</title>
+</head>
+<body>
+<div align="center">
+    <h1>Lecturer Log in Form</h1>
+    <br />
+    <form action="#" th:action="@{/continueadmin}" th:object="${admin}"
+          method="post">
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>UserID</td>
+                <td><input type="text" th:field="*{admin}"/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" th:field="*{password}" /></td>
+            </tr>
+
+            <td colspan="2"><button type="submit">Log in</button> </td>
+            </tr>
+        </table>
+    </form>
+    Click <a href="/">here</a> to login as a lecturer
+</div>
+</body>
+</html>

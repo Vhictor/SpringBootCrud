@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>My courses</title>
+</head>
+<body>
+<div align="center">
+    <h1>List of registered courses</h1>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Name</th>
+            <th>Matric No</th>
+            <th>Level</th>
+            <th>Course Code</th>
+            <th>Course Title</th>
+            <th>Score</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="data : ${studentDataList}">
+            <td th:text="${data.id}">Product ID</td>
+            <td th:text="${data.name}">Name</td>
+            <td th:text="${data.matric}">Matric No</td>
+            <td th:text="${data.level}">Level</td>
+            <td th:text="${data.coursec}">Course Code</td>
+            <td th:text="${data.courset}">Course Title</td>
+            <td th:text="${data.score}">Score</td>
+            <td>
+                <a th:href="@{'/editadmin/' + ${data.id}}">Edit</a>
+
+                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{'/delete/' + ${data.id}}">Remove</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

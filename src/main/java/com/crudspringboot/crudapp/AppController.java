@@ -7,14 +7,16 @@ import com.crudspringboot.crudapp.service.AdminService;
 import com.crudspringboot.crudapp.service.StudentDataService;
 import com.crudspringboot.crudapp.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class AppController {
     @Autowired
     private StudentDataService studentDataService;
@@ -25,22 +27,50 @@ public class AppController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping("/student")
-    public String viewHomePage(Model model){
+    @GetMapping("/students")
+    public ResponseEntity<List<StudentData>> viewHomePage(Model model){
         List<StudentData> studentDataList = studentDataService.listAll();
         model.addAttribute("studentDataList",studentDataList);
-        return  "index.html";
+        return new ResponseEntity<List<StudentData>>(studentDataList,HttpStatus.OK);
+    }
+
+    @GetMapping("/student")
+    @ResponseBody
+    public Optional<StudentData> findStudentByMatric(@RequestParam(value = "matric") String matric){
+
+        return  studentDataService.findStudentByMatric(matric);
+    }
+
+    @PostMapping("/student/editscore")
+    @ResponseBody
+    public StudentData findStudentByMatricAndEditScore(@RequestParam(value = "matric") String matric, @RequestParam (value = "score") int score){
+
+        Optional<StudentData> studentData =  studentDataService.findStudentByMatric(matric);
+
+        if(studentData.isPresent()){
+            StudentData data = studentData.get();
+            data.setScore(score);
+            studentDataService.addCourse(data);
+            return data;
+        }
+
+        else {
+            return null;
+        }
     }
 
 
-    @RequestMapping("/admin")
+
+
+
+    @GetMapping("/admin")
     public String viewHomePageAdmin(Model model){
         List<StudentData> studentDataList = studentDataService.listAll();
         model.addAttribute("studentDataList",studentDataList);
         return  "index_admin.html";
     }
 
-    @RequestMapping("/new")
+    @GetMapping("/new")
     public String showNewCourseForm(Model model){
         StudentData studentData = new StudentData();
         model.addAttribute("studentData", studentData);
@@ -62,14 +92,14 @@ public class AppController {
         return "redirect:/admin";
 
     }
-    @RequestMapping("/")
+    @GetMapping("/")
     public String showLogInForm(Model model){
         Student student = new Student();
         model.addAttribute("student", student);
         return "login";
     }
 
-    @RequestMapping("/loginadmin")
+    @GetMapping("/loginadmin")
     public String showLogInFormAdmin(Model model){
         Admin admin = new Admin();
         model.addAttribute("admin", admin);
@@ -77,7 +107,7 @@ public class AppController {
     }
 
 
-    @RequestMapping(value = "/edit/{id}")
+    @GetMapping(value = "/edit/{id}")
     public ModelAndView editProduct(@PathVariable(name = "id") Long id){
         ModelAndView modelAndView = new ModelAndView("edit_data");
 
